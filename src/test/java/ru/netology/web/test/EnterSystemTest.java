@@ -24,20 +24,21 @@ public class EnterSystemTest {
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DbInteractionDbUtils.getVerificationCode(authInfo.getLogin());
-        verificationPage.validVerify(verificationCode);
+        val verify = verificationPage.validVerify(verificationCode);
+        verify.shouldBeVisible();
     }
 
 
     @Test
     void shouldMake3LoginAndBlock() {
         val loginPage = new LoginPage();
-        val authInfo = DataHelper.getOtherAuthInfo();
-        loginPage.validLogin(authInfo);
+        val InvalidAuthInfo = DataHelper.getInvalidAuthInfo();
+        loginPage.invalidLogin(InvalidAuthInfo);
         loginPage.cleanLoginFields();
-        loginPage.validLogin(authInfo);
+        loginPage.invalidLogin(InvalidAuthInfo);
         loginPage.cleanLoginFields();
-        loginPage.validLogin(authInfo);
-        val statusSQL = DbInteractionDbUtils.getStatusFromDb(authInfo.getLogin());
+        loginPage.invalidLogin(InvalidAuthInfo);
+        val statusSQL = DbInteractionDbUtils.getStatusFromDb(InvalidAuthInfo.getLogin());
         assertEquals("blocked", statusSQL);
     }
 

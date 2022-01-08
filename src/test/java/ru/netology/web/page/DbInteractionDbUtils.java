@@ -20,6 +20,7 @@ public class DbInteractionDbUtils {
         try (Connection connection = getConnection();
              PreparedStatement idStmt = connection.prepareStatement(dataSQL);
         ) {
+            idStmt.setString(1,login);
             try (ResultSet rs = idStmt.executeQuery()) {
                 if (rs.next()) {
                     userId = rs.getString("id");

@@ -23,4 +23,11 @@ public class LoginPage {
         loginField.doubleClick().sendKeys(Keys.BACK_SPACE);
         passwordField.doubleClick().sendKeys(Keys.BACK_SPACE);
     }
+
+    public VerificationPage invalidLogin(DataHelper.AuthInfo invalidInfo) {
+        loginField.setValue(invalidInfo.getLogin());
+        passwordField.setValue(invalidInfo.getPassword());
+        loginButton.click();
+        return new VerificationPage();
+    }
 }
